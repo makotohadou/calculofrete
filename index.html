@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="index.js" type="text/javascript"></script> 
     <style type="text/css">
         .container-fluid {
             width: 500px;
@@ -32,28 +31,31 @@
 <body>
     <div class="container-fluid">
         <h1>Calcule o seu frete</h1>
-        <div ng-app="myApp" ng-controller="controller">
+        <form>
+        <div ng-app="myApp" ng-controller="controller" >
+
             <table>
                 <tr>
                     <td>Nome Remetente</td>
-                    <td><input type="text" ng-model="objJson.nmRemetente" ></td>
+                    <td><input type="text" ng-model="objJson.nmRemetente" class="form-control"  required></td>
                 </tr>
                 <tr>
                     <td>CEP Remetente</td>
-                    <td> <input type="text" ng-model="objJson.cepRemetente" ></td>
+                    <td> <input type="text" ng-model="objJson.cepRemetente" class="form-control"  required></td>
                 </tr> 
                 <tr>
                     <td>Nome Destinatário</td>
-                    <td><input type="text" ng-model="objJson.nmDestinatario" ></td>
+                    <td><input type="text" ng-model="objJson.nmDestinatario" class="form-control"  required></td>
                 </tr>
                 <tr>
                     <td>CEP Destinatário</td>
-                    <td><input type="text" ng-model="objJson.cepDestinatario" ></td>
+                    <td><input type="text" ng-model="objJson.cepDestinatario" class="form-control"  required></td>
                 </tr>
                 <tr>
-                    <td><input type="button" value='Enviar' ng-click="submit()"></td>
+                    <td><input type="button" class="btn btn-default" value='Enviar' ng-click="submit()"></td>
                 </tr>
             </table>
+
             <br>
             <table>
                 <tr>
@@ -67,6 +69,7 @@
             </table>
 
         </div>
+        </form>
     </div>
 </body>
 <script>
