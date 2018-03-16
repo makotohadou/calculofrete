@@ -31,9 +31,7 @@
 <body>
     <div class="container-fluid">
         <h1>Calcule o seu frete</h1>
-        <form>
         <div ng-app="myApp" ng-controller="controller" >
-
             <table>
                 <tr>
                     <td>Nome Remetente</td>
@@ -41,7 +39,7 @@
                 </tr>
                 <tr>
                     <td>CEP Remetente</td>
-                    <td> <input type="text" ng-model="objJson.cepRemetente" class="form-control"  required></td>
+                    <td> <input type="text" placeholder="########" ng-model="objJson.cepRemetente" class="form-control"  required></td>
                 </tr> 
                 <tr>
                     <td>Nome Destinatário</td>
@@ -49,7 +47,7 @@
                 </tr>
                 <tr>
                     <td>CEP Destinatário</td>
-                    <td><input type="text" ng-model="objJson.cepDestinatario" class="form-control"  required></td>
+                    <td><input type="text" placeholder="########" ng-model="objJson.cepDestinatario" class="form-control"  required></td>
                 </tr>
                 <tr>
                     <td><input type="button" class="btn btn-default" value='Enviar' ng-click="submit()"></td>
@@ -69,7 +67,7 @@
             </table>
 
         </div>
-        </form>
+        <h2 id="errorLabel"></h2>
     </div>
 </body>
 <script>
@@ -80,8 +78,15 @@
         $scope.submit = function () {
             $http.get('/frete', {params : $scope.objJson})
                 .then(function (response) {
-                    document.getElementById("valor").innerHTML=response.data.valorFrete;
-                    document.getElementById("prazo").innerHTML=response.data.prazoFrete;
+                    if (response.data.valorFrete == null){
+                        document.getElementById("errorLabel").innerHTML="Não foi possível calcular o frete.";
+                        document.getElementById("valor").innerHTML="";
+                        document.getElementById("prazo").innerHTML="";
+                    } else {
+                        document.getElementById("errorLabel").innerHTML="";
+                        document.getElementById("valor").innerHTML=response.data.valorFrete;
+                        document.getElementById("prazo").innerHTML=response.data.prazoFrete;                          
+                    }
                 }, function(response){
                     $scope.content = "Ops. Algo deu errado.";
                 })
