@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+<head>
+    <title>Cálculo de Frete</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style type="text/css">
+        .container-fluid {
+            width: 500px;
+            clear: both;
+        }
+        .container-fluid input {
+            width: 100%;
+            clear: both;
+        }
+        td{
+            padding:0 15px 0 15px;
+            padding-top: 2px;
+            padding-bottom: 2px;
+        }
+
+    
+    </style>
+</head>
+
+
+<body>
+    <div class="container-fluid">
+        <h1>Calcule o seu frete</h1>
+        <div ng-app="myApp" ng-controller="controller">
+            <table>
+                <tr>
+                    <td>Nome Remetente</td>
+                    <td><input type="text" ng-model="objJson.nmRemetente" ></td>
+                </tr>
+                <tr>
+                    <td>CEP Remetente</td>
+                    <td> <input type="text" ng-model="objJson.cepRemetente" ></td>
+                </tr> 
+                <tr>
+                    <td>Nome Destinatário</td>
+                    <td><input type="text" ng-model="objJson.nmDestinatario" ></td>
+                </tr>
+                <tr>
+                    <td>CEP Destinatário</td>
+                    <td><input type="text" ng-model="objJson.cepDestinatario" ></td>
+                </tr>
+                <tr>
+                    <td><input type="button" value='Enviar' ng-click="submit()"></td>
+                </tr>
+            </table>
+            <br>
+            <table>
+                <tr>
+                    <td>Valor do frete</td>
+                    <td id="valor"></td>
+                </tr>
+                <tr>
+                    <td>Prazo de entrega</td>
+                    <td id="prazo"></td>
+                </tr>
+            </table>
+
+        </div>
+    </div>
+</body>
+
+<script>
+    var app = angular.module('myApp', []);
+    app.controller('controller', function ($scope, $http, $q) {
+        $scope.objJson = { 'nmRemetente': null, 'cepRemetente': null, 'nmDestinatario': null, 'cepDestinatario': null };
+
+        $scope.submit = function () {
+           $http.get('/frete', {params : $scope.objJson})
+                .then(function (response) {
+                    document.getElementById("valor").innerHTML=response.data.valorFrete;
+                    document.getElementById("prazo").innerHTML=response.data.prazoFrete;
+                }, function(response){
+                    $scope.content = "Ops. Algo deu errado.";
+                })
+
+        };
+    });
+</script>
+
+</html>
