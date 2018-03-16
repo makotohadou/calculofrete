@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="index.js" type="text/javascript"></script> 
     <style type="text/css">
         .container-fluid {
             width: 500px;
@@ -68,14 +69,13 @@
         </div>
     </div>
 </body>
-
 <script>
     var app = angular.module('myApp', []);
     app.controller('controller', function ($scope, $http, $q) {
         $scope.objJson = { 'nmRemetente': null, 'cepRemetente': null, 'nmDestinatario': null, 'cepDestinatario': null };
 
         $scope.submit = function () {
-           $http.get('/frete', {params : $scope.objJson})
+            $http.get('/frete', {params : $scope.objJson})
                 .then(function (response) {
                     document.getElementById("valor").innerHTML=response.data.valorFrete;
                     document.getElementById("prazo").innerHTML=response.data.prazoFrete;
